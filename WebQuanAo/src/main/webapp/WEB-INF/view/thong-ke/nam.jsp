@@ -147,7 +147,7 @@
                 <a href="/thong-ke/theo-nam">Theo năm</a>
                 <form method="get" action="/thong-ke/theo-nam" class="form-container">
                     <label for="selectedYear" class="form-label">Chọn năm:</label>
-                    <input type="year" id="selectedYear" name="selectedYear" value="${now}" class="form-input"/>
+                    <input type="number" id="selectedYear" name="selectedYear" value="${now}" class="form-input" min="2000" max="${now}" step="1"/>
                     <input type="submit" value="Lấy dữ liệu" class="form-button"/>
                 </form>
                 <br>

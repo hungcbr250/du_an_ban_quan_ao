@@ -13,6 +13,8 @@ public interface IChiTietSanPhamRepository extends JpaRepository<ChitietSanPham,
 
     @Query("select ctsp from ChitietSanPham ctsp order by ctsp.idTrangThai.id ")
     Page<ChitietSanPham> findAll(Pageable pageable);
+    @Query("update ChitietSanPham set giaKhuyenMai =:giaSauKM")
+    void updateAll(@Param("giaSauKM")BigDecimal giaSauKM);
 
     ChitietSanPham findChitietSanPhamById(Integer id);
 

@@ -185,6 +185,18 @@ public class LoginController {
         return "redirect:/cart/" + userId;
 
     }
+    @PostMapping("/add-to-cart-in-detail/{id}")
+    private String addToCartInDetail(Model model, @PathVariable(name = "id") Integer id
+            , @RequestParam(name = "userId") Long userId
+            , @RequestParam(name = "soLuong") String soLuong
+    ) {
+        AppUser appUser = appUserRepository.findById(userId).orElse(null);
+        ChitietSanPham chitietSanPham = serviceChiTiet.findChitietSanPhamById(id);
+        iGioHangChiTietSessionRepo.addToCartinDetail(chitietSanPham, userId,Integer.valueOf(soLuong));
+        model.addAttribute("appUser", appUser);
+        return "redirect:/cart/" + userId;
+
+    }
 
     @PostMapping("/reduce-cart/{id}")
     private String giamSanPham(Model model, @PathVariable(name = "id") Integer id
@@ -270,5 +282,20 @@ public class LoginController {
         model.addAttribute("appUser", appUser);
 
         return "thanh-toan/thanh-cong";
+    }
+    @GetMapping("/detail/{id}/{idUser}")
+    private String detail(Model model, @PathVariable(name = "id") Integer id
+//    ,  @RequestParam(name = "userId") Long userId
+            , @PathVariable(name = "idUser") Long idUser
+    ) {
+        ChitietSanPham chiTietSanPham =serviceChiTiet.findChitietSanPhamById(id);
+        AppUser appUser = appUserRepository.findById(idUser).orElse(null);
+
+        model.addAttribute("appUser", appUser);
+
+        model.addAttribute("chiTietSP", chiTietSanPham);
+
+        return "ban-hang/detail";
+
     }
 }

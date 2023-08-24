@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="../../../boutique/css/custom.css">
     <!-- Favicon-->
     <link rel="shortcut icon" href="img/favicon.png">
+    <link rel="shortcut icon" href="">
 </head>
 <body>
 <div class="page-holder">
@@ -279,13 +280,16 @@
                         <div class="row">
                             <!-- PRODUCT-->
                             <c:forEach items="${listChiTietSanPham.getContent()}" var="ctsp">
+                                <c:choose>
+                                    <c:when test="${ctsp.giaKhuyenMai > 0}">
                                 <div class="col-lg-4 col-sm-6">
                                     <div class="product text-center">
                                         <div class="mb-3 position-relative">
                                             <div class="badge text-white bg-"></div>
-                                            <a class="d-block" href="detail.html"><img class="img-fluid w-100"
+                                            <input type="hidden" name="userId" value="${appUser.userId}">${appUser.userId}
+                                            <a class="d-block" href="/detail/${ctsp.id}/${appUser.userId}"><img class="img-fluid w-100"
                                                                                        src="getimage/${ctsp.image}"
-                                                                                       alt="..."></a>
+                                                                                       alt="..." ></a>
                                             <div class="product-overlay">
                                                 <ul class="mb-0 list-inline">
                                                     <li class="list-inline-item m-0 p-0"><a
@@ -293,7 +297,8 @@
                                                             class="far fa-heart"></i></a></li>
                                                     <form action="/add-to-cart/${ctsp.id}" method="post">
                                                         <input type="hidden" name="userId" value="${appUser.userId}">
-                                                        <button class="list-inline-item m-0 p-0" type="submit"><a class="btn btn-sm btn-dark">Add to cart</a></button>
+                                                        <button class="list-inline-item m-0 p-0" type="submit"><a
+                                                                class="btn btn-sm btn-dark">Add to cart</a></button>
                                                     </form>
                                                     <li class="list-inline-item mr-0"><a
                                                             class="btn btn-sm btn-outline-dark" href="#productView"
@@ -303,10 +308,43 @@
                                             </div>
                                         </div>
                                         <h6><a class="reset-anchor" href="detail.html">${ctsp.ten}: ${ctsp.id}</a></h6>
-                                        <p class="small text-muted">${ ctsp.giaBan }</p>
-
+                                        <p class="small text-muted" style="text-decoration: line-through">${ ctsp.giaBan }</p>
+                                        <p  style="color: red ; font-weight: bold ;font-size: larger" >${ ctsp.giaKhuyenMai }</p>
                                     </div>
                                 </div>
+                                    </c:when>
+                                    <c:when test="${ctsp.giaKhuyenMai <= 0}">
+                                        <div class="col-lg-4 col-sm-6">
+                                            <div class="product text-center">
+                                                <div class="mb-3 position-relative">
+                                                    <div class="badge text-white bg-"></div>
+                                                    <input type="hidden" name="userId" value="${appUser.userId}">${appUser.userId}
+                                                    <a class="d-block" href="/detail/${ctsp.id}/${appUser.userId}"><img class="img-fluid w-100"
+                                                                                                                        src="getimage/${ctsp.image}"
+                                                                                                                        alt="..." ></a>
+                                                    <div class="product-overlay">
+                                                        <ul class="mb-0 list-inline">
+                                                            <li class="list-inline-item m-0 p-0"><a
+                                                                    class="btn btn-sm btn-outline-dark" href="#!"><i
+                                                                    class="far fa-heart"></i></a></li>
+                                                            <form action="/add-to-cart/${ctsp.id}" method="post">
+                                                                <input type="hidden" name="userId" value="${appUser.userId}">
+                                                                <button class="list-inline-item m-0 p-0" type="submit"><a
+                                                                        class="btn btn-sm btn-dark">Add to cart</a></button>
+                                                            </form>
+                                                            <li class="list-inline-item mr-0"><a
+                                                                    class="btn btn-sm btn-outline-dark" href="#productView"
+                                                                    data-bs-toggle="modal"><i class="fas fa-expand"></i></a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <h6><a class="reset-anchor" href="detail.html">${ctsp.ten}: ${ctsp.id}</a></h6>
+                                                <p class="small text-muted">${ ctsp.giaBan }</p>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                </c:choose>
                             </c:forEach>
                         </div>
                         <!-- PAGINATION-->
@@ -373,12 +411,12 @@
         </div>
     </footer>
     <!-- JavaScript files-->
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="vendor/glightbox/js/glightbox.min.js"></script>
-    <script src="vendor/nouislider/nouislider.min.js"></script>
-    <script src="vendor/swiper/swiper-bundle.min.js"></script>
-    <script src="vendor/choices.js/public/assets/scripts/choices.min.js"></script>
-    <script src="js/front.js"></script>
+    <script src="../../../boutique/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="../../../boutique/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="../../../boutique/vendor/nouislider/nouislider.min.js"></script>
+    <script src="../../../boutique/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="../../../boutique/vendor/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script src="../../../boutique/js/front.js"></script>
     <!-- Nouislider Config-->
     <script>
         var range = document.getElementById('range');

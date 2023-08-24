@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Transactional
@@ -52,14 +53,41 @@ public class GioHangChiTietSessionRepo implements IGioHangChiTietSessionRepo {
             newGioHangChiTiet.setIdChiTietSanPham(chiTietSanPham);
             newGioHangChiTiet.setIdGioHang(gioHang);
             newGioHangChiTiet.setSoLuong(1);
-            newGioHangChiTiet.setDonGia(chiTietSanPham.getGiaBan());
+            newGioHangChiTiet.setDonGia(BigDecimal.valueOf(chiTietSanPham.getGiaBan()));
             gioHangChiTiet.add(newGioHangChiTiet);
         }
 
         // Lưu thông tin vào cơ sở dữ liệu
         gioHangChiTietRepository.saveAll(gioHangChiTiet);
     }
+    @Override
+    public void addToCartinDetail(ChitietSanPham chiTietSanPham, Long userId,Integer soLuong) {
+        AppUser appUser = appUserRepository.findById(userId).orElse(null);
+        GioHang gioHang = gioHangRepository.findGioHangByUserId(appUser);
+        List<GioHangChiTiet> gioHangChiTiet = gioHangChiTietRepository.findByIdGioHang(gioHang);
+        boolean productExists = false;
+        for (GioHangChiTiet gioHangChiTietItem : gioHangChiTiet) {
+            if (gioHangChiTietItem.getIdChiTietSanPham().getId() == chiTietSanPham.getId()) {
+                // Sản phẩm đã tồn tại, tăng số lượng lên 1
+                gioHangChiTietItem.setSoLuong(gioHangChiTietItem.getSoLuong() + soLuong);
+                productExists = true;
+                break;
+            }
+        }
 
+        // Nếu sản phẩm chưa tồn tại, tạo mới giỏ hàng chi tiết và thêm vào danh sách
+        if (!productExists) {
+            GioHangChiTiet newGioHangChiTiet = new GioHangChiTiet();
+            newGioHangChiTiet.setIdChiTietSanPham(chiTietSanPham);
+            newGioHangChiTiet.setIdGioHang(gioHang);
+            newGioHangChiTiet.setSoLuong(soLuong);
+            newGioHangChiTiet.setDonGia(BigDecimal.valueOf(chiTietSanPham.getGiaBan()));
+            gioHangChiTiet.add(newGioHangChiTiet);
+        }
+
+        // Lưu thông tin vào cơ sở dữ liệu
+        gioHangChiTietRepository.saveAll(gioHangChiTiet);
+    }
 
     @Override
     public void truSanPham(Long userId, ChitietSanPham chiTietSanPham) {

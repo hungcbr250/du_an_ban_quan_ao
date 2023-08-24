@@ -72,8 +72,9 @@
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="../view1/layout-static.html">Static Navigation</a>
-                            <a class="nav-link" href="../../view1/layout-sidenav-light.html">Light Sidenav</a>
+                            <a class="nav-link" href="/mau-sac">Màu Sắc</a>
+                            <a class="nav-link" href="/loai-san-pham">Loại Sản Phẩm</a>
+                            <a class="nav-link" href="/hang-san-xuat">Nhà Sản Xuất</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
@@ -124,6 +125,10 @@
                         <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                         Chi tiết sản phẩm
                     </a>
+                    <a class="nav-link" href="/thong-ke/theo-ngay">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Thống kê
+                    </a>
                 </div>
             </div>
             <div class="sb-sidenav-footer">
@@ -135,112 +140,39 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Chi tiết sản phẩm</h1>
-                <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.html">Cập nhập chi tiết</a></li>
-                    <li class="breadcrumb-item active">Tables</li>
-                </ol>
+                <h1 class="mt-4">Top 10 sản phẩm bán chạy nhất theo ngày</h1>
+                <br>
+                <a href="/thong-ke/theo-ngay">Theo ngày</a>
+                <a href="/thong-ke/theo-thang">Theo tháng</a>
+                <a href="/thong-ke/theo-nam">Theo năm</a>
+                <br>
+                <form method="get" action="/thong-ke/theo-khoang-ngay" class="form-container">
+                    <label for="selectedDateStart" class="form-label">Chọn ngày:</label>
+                    <input type="datetime-local" id="selectedDateStart" name="selectedDateStart" class="form-input"/>
+                    <input type="datetime-local" id="selectedDateEnd" name="selectedDateEnd" class="form-input"/>
+                    <input type="submit" value="Lấy dữ liệu" class="form-button"/>
+                </form>
 
-
-                <div class="container">
-                    <form:form class="w3-container" action="/chi-tiet-san-pham/update/${chiTietSPDTO.id}" method="post"
-                               enctype="multipart/form-data" modelAttribute="chiTietSPDTO"
-                               onsubmit="return confirmAdd()">
-
-                        <center>
-                            <img src="../../../img/${image}" width="300" height="300">
-                        </center>
-
-
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">Tên sản phẩm</label>
-                                <form:input class="form-control" path="ten"></form:input>
-                                <form:errors path="ten"/>
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Màu sắc</label>
-                                <form:select path="idMauSac.id" class="form-control">
-                                    <c:forEach items="${listMS}" var="sp">
-                                        <form:option value="${sp.id}">${sp.ten}</form:option>
-                                    </c:forEach>
-                                </form:select>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">Hãng sản phẩm</label>
-                                <form:select path="idHang.id" class="form-control">
-                                    <c:forEach items="${listHangSanXuat}" var="sp">
-                                        <form:option value="${sp.id}">${sp.ten}</form:option>
-                                    </c:forEach>
-                                </form:select>
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Kích cỡ</label>
-                                <form:select path="idKichCo.id" class="form-control">
-                                    <c:forEach items="${listKichCo}" var="sp">
-                                        <form:option value="${sp.id}">${sp.ten}</form:option>
-                                    </c:forEach>
-                                </form:select>
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">Chất liệu</label>
-                                <form:select path="idChatLieu.id" class="form-control">
-                                    <c:forEach items="${listChatLieu}" var="sp">
-                                        <form:option value="${sp.id}">${sp.ten}</form:option>
-                                    </c:forEach>
-                                </form:select>
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Loại sản phẩm</label>
-                                <form:select path="idLoai.id" class="form-control">
-                                    <c:forEach items="${listLoai}" var="sp">
-                                        <form:option value="${sp.id}">${sp.ten}</form:option>
-                                    </c:forEach>
-                                </form:select>
-                            </div>
-                        </div>
-
-
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">Số lượng tồn</label>
-                                <form:input class="form-control" path="soLuongTon"></form:input>
-                                <form:errors path="soLuongTon"/>
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Giá</label>
-                                <form:input class="form-control" path="giaBan"></form:input>
-                                <form:errors path="giaBan"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">Ngày nhập</label>
-                                <form:input path="ngayNhap" type="date" value="${chiTietSPDTO.ngayNhap}"/>
-                                <form:errors path="ngayNhap"/>
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Ngày chỉnh sửa</label>
-                                <form:input path="ngayChinhSua" type="date" value="${chiTietSPDTO.ngayChinhSua}"/>
-                                <form:errors path="ngayChinhSua"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="form-label">Chọn ảnh</label>
-                            <form:input class="form-control" path="image" type="file"
-                                        value="${chiTietSPDTO.image}"></form:input>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </form:form>
-                </div>
-
+                <table class="table table-sm table-hover">
+                    <thead>
+                    <tr>
+                        <th class="text-center align-middle" scope="col">IMAGE</th>
+                        <th class="text-center align-middle" scope="col">TÊN</th>
+                        <th class="text-center align-middle" scope="col">TỔNG SỐ LƯỢNG</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <c:forEach items="${listTop10}" var="hd">
+                        <tr>
+                            <td class="text-center align-middle">
+                                <img src="../../../img/${hd[2]}" alt="" width="100" height="90">
+                            </td>
+                            <td class="text-center align-middle">${hd[1]}</td>
+                            <td class="text-center align-middle">${hd[3]}</td>
+                        </tr>
+                    </c:forEach>
+                    </tbody>
+                </table>
 
             </div>
         </main>
@@ -258,6 +190,19 @@
         </footer>
     </div>
 </div>
+<script>
+    function confirmRemove() {
+        return confirm("Bạn có chắc chắn muốn tắt trạng thái ");
+    }
+
+    function confirmRemove1() {
+        return confirm("Bạn có chắc chắn muốn bật trạng thái ");
+    }
+
+    function confirmAdd() {
+        return confirm("Bạn có chắc chắn muốn thêm excel.");
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
 <script src="../../../bootrap/js/scripts.js"></script>

@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.ChitietSanPham;
 import com.example.demo.model.Loai;
+import com.example.demo.model.MauSac;
 import com.example.demo.repository.*;
 import com.example.demo.service.IChiTietSanPhamService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -46,6 +48,7 @@ public class BanHangController {
 
     @Autowired
     private IUserRoleRepository iUserRoleRepository;
+
     @GetMapping
     private String viewAll(Model model, @RequestParam(defaultValue = "1") int page,
                            @RequestParam(required = false, name = "tenSanPham") String keyword,
@@ -78,4 +81,6 @@ public class BanHangController {
         return "ban-hang/shop";
 
     }
+
+
 }

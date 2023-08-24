@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -52,6 +54,17 @@ public interface IHoaDonChiTietRepo extends JpaRepository<HoaDonChiTiet, Integer
             "GROUP BY c.id, CONVERT(VARCHAR(100), c.image), c.ten " +
             "ORDER BY SUM(a.soLuong) DESC")
     List<Object[]> getTop10SanPhamTheoNgay2(@Param("selectedDate") Date selectedDate);
+    @Query("SELECT c.id AS idCTSP, c.ten, CONVERT(VARCHAR(100), c.image) AS image, SUM(a.soLuong) AS tongSoLuong " +
+            "FROM HoaDonChiTiet a " +
+            "JOIN a.idHoaDon b " +
+            "JOIN a.idChiTietSanPham c " +
+            "WHERE b.ngayDat >= :selectedDateStart and b.ngayDat <= :selectedDateEnd" +   // Lấy theo ngày được chọn từ input
+            " group by c.id, CONVERT(VARCHAR(100), c.image), c.ten " +
+            "ORDER BY SUM(a.soLuong) DESC")
+    List<Object[]> getTop10SanPhamTheoKhoangNgay(@Param("selectedDateStart") LocalDateTime selectedDateStart,
+                                                 @Param("selectedDateEnd") LocalDateTime selectedDateEnd
+
+    );
 
     @Query("SELECT c.id AS idCTSP, c.ten, CONVERT(VARCHAR(100), c.image) AS image, SUM(a.soLuong) AS tongSoLuong " +
             "FROM HoaDonChiTiet a " +

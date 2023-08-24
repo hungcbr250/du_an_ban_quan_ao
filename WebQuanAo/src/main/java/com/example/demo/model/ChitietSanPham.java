@@ -63,7 +63,10 @@ public class ChitietSanPham {
     @NotNull(message = "Giá không được để trống")
     @Column(name = "gia")
     @DecimalMin(value = "0.0", inclusive = false, message = "Giá không được để trống và phải lớn hơn 0")
-    private BigDecimal giaBan;
+    private Float giaBan;
+
+    @Column(name = "giakhuyenmai")
+    private Float  giaKhuyenMai;
 
     @ManyToOne
     @JoinColumn(name = "trangthai")

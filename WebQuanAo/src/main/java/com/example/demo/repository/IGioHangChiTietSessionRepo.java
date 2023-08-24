@@ -7,6 +7,7 @@ public interface IGioHangChiTietSessionRepo {
 
 
     void addToCart(ChitietSanPham chiTietSanPham, Long userId);
+    void addToCartinDetail(ChitietSanPham chiTietSanPham, Long userId,Integer soLuong);
 
     void truSanPham(Long userId, ChitietSanPham chiTietSanPham);
 

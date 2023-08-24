@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,19 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
     <meta name="description" content=""/>
     <meta name="author" content=""/>
-    <title>Tables - SB Admin</title>
-    <%--        <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />--%>
-    <%--        <link href="../bootrap/css/styles.css" rel="stylesheet" />--%>
-    <%--        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>--%>
-
-    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet"/>
+    <title>Static Navigation - SB Admin</title>
     <link href="../../../bootrap/css/styles.css" rel="stylesheet"/>
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 </head>
-
-
-</head>
-<body class="sb-nav-fixed">
+<body>
 <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
     <!-- Navbar Brand-->
     <a class="navbar-brand ps-3" href="index.html">Start Bootstrap</a>
@@ -66,14 +59,15 @@
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts"
                        aria-expanded="false" aria-controls="collapseLayouts">
                         <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                        Thuộc tính
+                        Thuoc tinh
                         <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                     </a>
                     <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne"
                          data-bs-parent="#sidenavAccordion">
                         <nav class="sb-sidenav-menu-nested nav">
-                            <a class="nav-link" href="../view1/layout-static.html">Static Navigation</a>
-                            <a class="nav-link" href="../../view1/layout-sidenav-light.html">Light Sidenav</a>
+                            <a class="nav-link" href="/mau-sac">Màu Sắc</a>
+                            <a class="nav-link" href="/loai-san-pham">Loại Sản Phẩm</a>
+                            <a class="nav-link" href="/hang-san-xuat">Nhà Sản Xuất</a>
                         </nav>
                     </div>
                     <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
@@ -135,113 +129,116 @@
     <div id="layoutSidenav_content">
         <main>
             <div class="container-fluid px-4">
-                <h1 class="mt-4">Chi tiết sản phẩm</h1>
+                <h1 class="mt-4">Mau sac</h1>
                 <ol class="breadcrumb mb-4">
-                    <li class="breadcrumb-item"><a href="index.html">Cập nhập chi tiết</a></li>
-                    <li class="breadcrumb-item active">Tables</li>
+                    <%--                            <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>--%>
+                    <li class="breadcrumb-item active">Hien thi</li>
                 </ol>
 
-
-                <div class="container">
-                    <form:form class="w3-container" action="/chi-tiet-san-pham/update/${chiTietSPDTO.id}" method="post"
-                               enctype="multipart/form-data" modelAttribute="chiTietSPDTO"
-                               onsubmit="return confirmAdd()">
-
-                        <center>
-                            <img src="../../../img/${image}" width="300" height="300">
-                        </center>
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
+                            <br>
 
 
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">Tên sản phẩm</label>
-                                <form:input class="form-control" path="ten"></form:input>
-                                <form:errors path="ten"/>
+                            <div class="form-container">
+                                <form:form method="POST" action="/khuyen-mai/add" modelAttribute="khuyenMai"
+                                           class="custom-form">
+                                    <div class="form-group">
+                                        <label for="ten">Tên:</label>
+                                        <form:input path="ten" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ten">Phần trăm giảm:</label>
+                                        <form:input path="phanTramGiam" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ngayBatDau">Ngày bắt đầu:</label>
+                                        <form:input path="ngayBatDau" type="date" class="form-control"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="ngayKetThuc">Ngày kết thúc:</label>
+                                        <form:input path="ngayKetThuc" type="date" class="form-control"/>
+                                    </div>
+                                    <br>
+                                    <button type="submit" class="btn btn-primary">Add</button>
+                                </form:form>
                             </div>
-                            <div class="col-6">
-                                <label class="form-label">Màu sắc</label>
-                                <form:select path="idMauSac.id" class="form-control">
-                                    <c:forEach items="${listMS}" var="sp">
-                                        <form:option value="${sp.id}">${sp.ten}</form:option>
-                                    </c:forEach>
-                                </form:select>
-                            </div>
+
+
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">Hãng sản phẩm</label>
-                                <form:select path="idHang.id" class="form-control">
-                                    <c:forEach items="${listHangSanXuat}" var="sp">
-                                        <form:option value="${sp.id}">${sp.ten}</form:option>
-                                    </c:forEach>
-                                </form:select>
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Kích cỡ</label>
-                                <form:select path="idKichCo.id" class="form-control">
-                                    <c:forEach items="${listKichCo}" var="sp">
-                                        <form:option value="${sp.id}">${sp.ten}</form:option>
-                                    </c:forEach>
-                                </form:select>
-                            </div>
-                        </div>
+                        <div class="col-1"></div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-1"></div>
+                        <div class="col-10">
 
 
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">Chất liệu</label>
-                                <form:select path="idChatLieu.id" class="form-control">
-                                    <c:forEach items="${listChatLieu}" var="sp">
-                                        <form:option value="${sp.id}">${sp.ten}</form:option>
-                                    </c:forEach>
-                                </form:select>
+                            <c:if test="${not empty successMessage}">
+                                <div class="alert alert-success">
+                                        ${successMessage}
+                                </div>
+                            </c:if>
+                            <div class="container-fluid">
+                                <div class="row justify-content-center">
+                                    <div class="col-12">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <table class="table table-hover">
+                                                    <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Mã</th>
+                                                        <th scope="col">Tên</th>
+                                                        <th scope="col">Phần trăm giảm</th>
+                                                        <th scope="col">Ngày bắt đầu</th>
+                                                        <th scope="col">Ngày kết thúc</th>
+                                                        <th scope="col">Trạng thái</th>
+                                                        <th scope="col">Chức năng</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <c:forEach items="${khuyenMais}" var="ms" varStatus="i">
+                                                        <tr>
+                                                            <th scope="row">${i.count}</th>
+                                                            <td>${ms.ma}</td>
+                                                            <td>${ms.ten}</td>
+                                                            <td>${ms.phanTramGiam}</td>
+                                                            <td>${ms.ngayBatDau}</td>
+                                                            <td>${ms.ngayKetThuc}</td>
+                                                            <td>${ms.trangThai.ten}</td>
+                                                            <td>
+                                                                <a href="/khuyen-mai/view-update/${ms.id}"
+                                                                   class="btn btn-sm btn-warning">Edit</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/khuyen-mai/ap-dung/${ms.id}"
+                                                                   class="btn btn-sm btn-warning">Áp dụng</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/khuyen-mai/ngung/${ms.id}"
+                                                                   class="btn btn-sm btn-danger" >Ngừng HD</a>
+                                                            </td>
+                                                            <td>
+                                                                <a href="/khuyen-mai/hoat-dong/${ms.id}"
+                                                                   class="btn btn-sm btn-secondary ${ms.ngayKetThuc < currentDate ? "disabled" :""}" >Hoạt động</a>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="col-6">
-                                <label class="form-label">Loại sản phẩm</label>
-                                <form:select path="idLoai.id" class="form-control">
-                                    <c:forEach items="${listLoai}" var="sp">
-                                        <form:option value="${sp.id}">${sp.ten}</form:option>
-                                    </c:forEach>
-                                </form:select>
-                            </div>
-                        </div>
 
-
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">Số lượng tồn</label>
-                                <form:input class="form-control" path="soLuongTon"></form:input>
-                                <form:errors path="soLuongTon"/>
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Giá</label>
-                                <form:input class="form-control" path="giaBan"></form:input>
-                                <form:errors path="giaBan"/>
-                            </div>
                         </div>
-                        <div class="row">
-                            <div class="col-6">
-                                <label class="form-label">Ngày nhập</label>
-                                <form:input path="ngayNhap" type="date" value="${chiTietSPDTO.ngayNhap}"/>
-                                <form:errors path="ngayNhap"/>
-                            </div>
-                            <div class="col-6">
-                                <label class="form-label">Ngày chỉnh sửa</label>
-                                <form:input path="ngayChinhSua" type="date" value="${chiTietSPDTO.ngayChinhSua}"/>
-                                <form:errors path="ngayChinhSua"/>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <label class="form-label">Chọn ảnh</label>
-                            <form:input class="form-control" path="image" type="file"
-                                        value="${chiTietSPDTO.image}"></form:input>
-                        </div>
-                        <br>
-                        <button type="submit" class="btn btn-primary">Update</button>
-                    </form:form>
+                    </div>
+                    <div class="col-1"></div>
                 </div>
-
-
             </div>
         </main>
         <footer class="py-4 bg-light mt-auto">
@@ -258,11 +255,46 @@
         </footer>
     </div>
 </div>
+<style>
+
+    .form-container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+    }
+
+    .form-container label {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .form-container input[type="text"] {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+
+    .form-container button[type="submit"] {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .form-container button[type="submit"]:hover {
+        background-color: #45a049;
+    }
+</style>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
 <script src="../../../bootrap/js/scripts.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-        crossorigin="anonymous"></script>
-<script src="../../../bootrap/js/datatables-simple-demo.js"></script>
 </body>
 </html>

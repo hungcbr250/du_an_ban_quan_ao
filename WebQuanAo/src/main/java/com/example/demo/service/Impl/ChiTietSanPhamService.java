@@ -147,7 +147,7 @@ public class ChiTietSanPhamService implements IChiTietSanPhamService {
 
                 Cell giaBanCell = row.getCell(7);
                 if (giaBanCell != null && giaBanCell.getCellType() == CellType.NUMERIC) {
-                    product.setGiaBan(BigDecimal.valueOf(giaBanCell.getNumericCellValue()));
+                    product.setGiaBan(Float.valueOf((float) giaBanCell.getNumericCellValue()));
                 }
                 Cell trangThaiCell = row.getCell(8);
                 if (trangThaiCell != null && trangThaiCell.getCellType() == CellType.NUMERIC) {

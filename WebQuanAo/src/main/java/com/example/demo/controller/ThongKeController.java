@@ -1,6 +1,5 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.SanPhamDTO;
 import com.example.demo.repository.IHoaDonChiTietRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,7 +13,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
 import java.util.Date;
 import java.util.List;
 
@@ -66,6 +64,16 @@ private String viewTop10TheoThang(Model model,@RequestParam(value = "selectedMon
         model.addAttribute("selectedDate", LocalDate.now());
 
         return "thong-ke/ngay";
+
+    }
+    @GetMapping("/theo-khoang-ngay")
+    private String viewTop10TheoKhoang(Model model
+            ,@RequestParam(value = "selectedDateStart",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime selectedDateStart
+            ,@RequestParam(value = "selectedDateEnd",required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime selectedDateEnd){
+
+        List<Object[]> listTop10 = iHoaDonChiTietRepo.getTop10SanPhamTheoKhoangNgay(selectedDateStart,selectedDateEnd);
+        model.addAttribute("listTop10", listTop10);
+        return "thong-ke/khoang";
 
     }
     @GetMapping("/theo-nam")
